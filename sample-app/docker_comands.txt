@@ -1,0 +1,34 @@
+// to build docker image from Dockerfile with tag
+docker build -f Dockerfile -t aramattamara/devops:v.1 .
+
+// to create a container with name new_devops from aramattamara/devops:v.1 image
+docker container create -i -t --name new_devops aramattamara/devops:v.1
+
+// to run image on specific port
+docker run -d -p 8050:8050 aramattamara/devops:v.1
+
+docker build -f Dockerfile-entrypoint -t aramattamara/devops:entrypoint .
+
+docker exec -it [container name] bash
+
+//should be in that directory where mount files located
+docker run -d -p 8054:8050 -v `pwd`:/tmp/input_files aramattamara/devops:entrypoint /tmp/input_files/obj_dependency_data2.csv
+
+//create a volume
+docker volume create my_volume
+
+//attach volume to the container
+docker run -d -v my_volume:/data_files -p 8051:8050 aramattamara/devops:v.2
+docker run -d -v my_volume:/data_files -p 8052:8050 aramattamara/devops:v.2
+
+
+//run two containers in same network
+docker run -d --net shared_network aramattamara/devops:v.2
+
+
+inside docker container
+- apt update
+- apt install telnet
+
+python3 -m http.server 8000
+- telnet 172.18.0.4 12345
