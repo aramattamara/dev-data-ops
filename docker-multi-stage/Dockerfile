@@ -16,8 +16,8 @@ FROM python:3.8-slim AS base
 # Set the working directory to /app
 WORKDIR /app
 
+# Copy the application code from the build stage
 COPY --from=build /app /app
-
 
 # Make port 5000 available to the world outside this container
 EXPOSE 5000
